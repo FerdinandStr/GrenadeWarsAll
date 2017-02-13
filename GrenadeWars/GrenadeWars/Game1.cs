@@ -18,6 +18,9 @@ namespace GrenadeWars {
         GraphicsDevice device;
         Texture2D backgroundTexture;
         Texture2D grenadierTexture;
+        Texture2D tankTexture;
+
+        MobileSprite tank;
 
         Player[] players;
         int numberOfPlayers = 4;
@@ -42,6 +45,7 @@ namespace GrenadeWars {
 
             backgroundTexture = Content.Load<Texture2D>("Background");
             grenadierTexture = Content.Load<Texture2D>("Grenadier");
+            tankTexture = Content.Load<Texture2D>("MulticolorTanks");
 
             screenWidth = device.PresentationParameters.BackBufferWidth;
             screenHeight = device.PresentationParameters.BackBufferHeight;
@@ -78,6 +82,8 @@ namespace GrenadeWars {
 
         public void ProcessKeyboard() {
             KeyboardState boardState = Keyboard.GetState();
+            
+           //PFEILE// 
             if (boardState.IsKeyDown(Keys.Left)) {
                 Console.WriteLine(players[currentPlayer].Position);
                 if (players[currentPlayer].Position.X > 0) {
@@ -86,13 +92,13 @@ namespace GrenadeWars {
             }
             if (boardState.IsKeyDown(Keys.Right)) {
                 Console.WriteLine(players[currentPlayer].Position);
-                if (players[currentPlayer].Position.X < maxX) {  // PLAYER SIZE hinzufügen
+                if (players[currentPlayer].Position.X < maxX - grenadierTexture.Width * players[currentPlayer].playerScaling) {  // PLAYER SIZE hinzufügen
                     players[currentPlayer].Position += new Vector2(1, 0);
                 }
             }
             if (boardState.IsKeyDown(Keys.Up)) {
                 Console.WriteLine(players[currentPlayer].Position);
-                if (players[currentPlayer].Position.Y > 0) {
+                if (players[currentPlayer].Position.Y > grenadierTexture.Height*players[currentPlayer].playerScaling) {
                     players[currentPlayer].Position -= new Vector2(0, 1);
                 }
             }
@@ -100,6 +106,32 @@ namespace GrenadeWars {
                 Console.WriteLine(players[currentPlayer].Position);
                 if (players[currentPlayer].Position.Y < maxY) {
                     players[currentPlayer].Position += new Vector2(0, 1);
+                }
+            }
+
+            //WASD//
+            if (boardState.IsKeyDown(Keys.A)) {
+                Console.WriteLine(players[2].Position);
+                if (players[2].Position.X > 0) {
+                    players[2].Position -= new Vector2(1, 0);
+                }
+            }
+            if (boardState.IsKeyDown(Keys.D)) {
+                Console.WriteLine(players[2].Position);
+                if (players[2].Position.X < maxX - grenadierTexture.Width * players[currentPlayer].playerScaling) {  // PLAYER SIZE hinzufügen
+                    players[2].Position += new Vector2(1, 0);
+                }
+            }
+            if (boardState.IsKeyDown(Keys.W)) {
+                Console.WriteLine(players[2].Position);
+                if (players[2].Position.Y > grenadierTexture.Height*players[currentPlayer].playerScaling) {
+                    players[2].Position -= new Vector2(0, 1);
+                }
+            }
+            if (boardState.IsKeyDown(Keys.S)) {
+                Console.WriteLine(players[2].Position);
+                if (players[2].Position.Y < maxY) {
+                    players[2].Position += new Vector2(0, 1);
                 }
             }
         }

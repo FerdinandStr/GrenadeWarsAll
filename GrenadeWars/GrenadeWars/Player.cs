@@ -19,7 +19,6 @@ namespace GrenadeWars {
             Color = color;
             Angle = angle;
             Health = health;
-
         }
 
         
