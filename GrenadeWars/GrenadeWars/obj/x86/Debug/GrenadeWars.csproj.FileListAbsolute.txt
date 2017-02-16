@@ -8,3 +8,4 @@ h:\eigene dateien\visual studio 2013\Projects\GrenadeWars\GrenadeWars\GrenadeWar
 h:\eigene dateien\visual studio 2013\Projects\GrenadeWars\GrenadeWars\GrenadeWars\bin\x86\Debug\Content\Background.xnb
 h:\eigene dateien\visual studio 2013\Projects\GrenadeWars\GrenadeWars\GrenadeWars\bin\x86\Debug\Content\Grenadier.xnb
 h:\eigene dateien\visual studio 2013\Projects\GrenadeWars\GrenadeWars\GrenadeWars\bin\x86\Debug\Content\MulticolorTanks.xnb
+h:\eigene dateien\visual studio 2013\Projects\GrenadeWars\GrenadeWars\GrenadeWars\bin\x86\Debug\Content\Retro-Coin-icon.xnb

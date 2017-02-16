@@ -37,6 +37,15 @@
       <Output>h:\eigene dateien\visual studio 2013\Projects\GrenadeWars\GrenadeWars\GrenadeWars\bin\x86\Debug\Content\MulticolorTanks.xnb</Output>
       <Time>2017-02-13T11:49:40.9977278+01:00</Time>
     </Item>
+    <Item>
+      <Source>Retro-Coin-icon.png</Source>
+      <Name>Retro-Coin-icon</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>h:\eigene dateien\visual studio 2013\Projects\GrenadeWars\GrenadeWars\GrenadeWars\bin\x86\Debug\Content\Retro-Coin-icon.xnb</Output>
+      <Time>2017-02-16T11:38:57.0659678+01:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <ContentProjectGUID>{8B12216B-0BD1-49DB-A4EE-F6844BE5B117}</ContentProjectGUID>

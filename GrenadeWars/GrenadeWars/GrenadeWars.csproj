@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FrameAnimation.cs" />
+    <Compile Include="Grenade.cs" />
     <Compile Include="MobileSprite.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -13,6 +13,10 @@ namespace GrenadeWars {
         public float Angle;
         public float Health;
         public float playerScaling = 1.5f;
+        public float speed = 5;
+        public List<Grenade> grenadeList = new List<Grenade> { };
+
+        public Rectangle playerRectange;
 
         public Player( bool isAlive, Color color, float angle, float health) {
             IsAlive = isAlive;
@@ -21,7 +25,16 @@ namespace GrenadeWars {
             Health = health;
         }
 
-        
+        internal void Uppdate(GameTime gameTime) {
+            //Check Collision und Bulletshoot
+        }
+
+        public void addGrenade(Grenade grenade) {
+            grenadeList.Add(grenade);
+        }
+        public List<Grenade> getGrenadeList() {
+            return grenadeList;
+        }
     }
 
 }
