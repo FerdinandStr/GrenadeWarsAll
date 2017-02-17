@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Media;
 namespace GrenadeWars {
 
     public class Game1 : Microsoft.Xna.Framework.Game {
+        Rectangle rect;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -21,13 +22,11 @@ namespace GrenadeWars {
         Texture2D grenadierTexture;
         Texture2D grenadeTexture;
 
-        List<Rectangle> wallList = new List<Rectangle> { };
-        Rectangle wall = new Rectangle(1000, 1000, 1, 1);
-        
+        //List<Rectangle> wallList = new List<Rectangle> { };        
 
         Player[] players;
 
-        int numberOfPlayers = 4;
+        int numberOfPlayers = 2;
 
         int screenWidth;
         int screenHeight;
@@ -61,7 +60,6 @@ namespace GrenadeWars {
             minY = 0;
 
             SetUpPlayers();
-            wallList.Add(wall);
         }
 
 
@@ -82,16 +80,42 @@ namespace GrenadeWars {
 
         protected override void Update(GameTime gameTime) {
             ProcessKeyboard();
-            base.Update(gameTime);
+            
 
-            foreach(Rectangle rect in wallList){
+            foreach(Rectangle rect in players[0].wallList){
                 if(players[0].playerRectange.Intersects(rect)){
                     Console.WriteLine("COLLISION");
                 }
             }
-            
+
+            //players[0].Position.X += 1;
+
+            foreach (Player player in players) {
+                int moveX = (1 * player.DirectionX);
+                int moveY = (1 * player.DirectionY);
+                player.Position.X += moveX;
+                player.Position.Y += moveY;
+
+                rect = player.wallList[player.wallList.Count - 1];
+                if (moveY == -1) {
+                    rect.Height += 1;
+                    rect.Y += -1;
+                }
+                else if (moveY == 1) {
+                    rect.Height += 1;
+                }
+                if (moveX == -1) {
+                    rect.Width += 1;
+                    rect.X += -1;
+                }
+                else if (moveX == 1) {
+                    rect.Width += 1;
+                }
+                player.wallList[player.wallList.Count - 1]= rect;
+            }
 
 
+            base.Update(gameTime);
             
         }
 
@@ -102,46 +126,44 @@ namespace GrenadeWars {
             if (boardState.IsKeyDown(Keys.Left)) {
                 Console.WriteLine(players[0].Position);
                 if (players[0].Position.X > 0) {
-                    players[0].Position.X -= 2;
-                    players[0].playerRectange.X = (int) players[0].Position.X;
+                    players[0].DirectionX = -1;
+                    players[0].DirectionY = 0;
+                    players[0].wallList.Add(new Rectangle((int)players[0].Position.X, (int)players[0].Position.Y, 10, 10));
                 }
             }
             if (boardState.IsKeyDown(Keys.Right)) {
                 Console.WriteLine(players[0].Position);
                 if (players[0].Position.X < maxX - grenadierTexture.Width * players[0].playerScaling) {  // PLAYER SIZE hinzufügen
-                    players[0].Position.X += 2;
-                    players[0].playerRectange.X = (int) players[0].Position.X;
+                    players[0].DirectionX = 1;
+                    players[0].DirectionY = 0;
+                    players[0].wallList.Add(new Rectangle((int)players[0].Position.X, (int)players[0].Position.Y, 10, 10));
                 }
             }
             if (boardState.IsKeyDown(Keys.Up)) {
                 Console.WriteLine(players[0].Position);
-                if (players[0].Position.Y > grenadierTexture.Height*players[0].playerScaling) {
-                    players[0].Position.Y -= 2;
-                    players[0].playerRectange.Y = (int)players[0].Position.Y;
+                if (players[0].Position.X < maxX - grenadierTexture.Width * players[0].playerScaling) {  // PLAYER SIZE hinzufügen
+                    players[0].DirectionX = 0;
+                    players[0].DirectionY = -1;
+                    players[0].wallList.Add(new Rectangle((int)players[0].Position.X, (int)players[0].Position.Y, 10, 10));
                 }
             }
             if (boardState.IsKeyDown(Keys.Down)) {
                 Console.WriteLine(players[0].Position);
-                if (players[0].Position.Y < maxY) {
-                    players[0].Position.Y += 2;
-                    players[0].playerRectange.Y = (int)players[0].Position.Y;
+                if (players[1].Position.Y < maxY) {
+                    players[0].DirectionX = 0;
+                    players[0].DirectionY = 1;
+                    players[0].wallList.Add(new Rectangle((int)players[0].Position.X, (int)players[0].Position.Y, 10, 10));
                 }
             }
             if (boardState.IsKeyDown(Keys.RightControl)) {
                 Console.WriteLine(players[0].Position);
 
-                int x1 = wallList[wallList.Count -1 ].X;
-                int y1 = wallList[wallList.Count -1].Y;
-                int x2 = (int)players[2].Position.X;
-                int y2 = (int)players[2].Position.Y;
-
-                if(((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2)) > 100){
-                    Rectangle wall = new Rectangle((int)players[0].Position.X, (int)players[0].Position.Y, 10, 10);
-                    wallList.Add(wall);
-                }
                 
-
             }
+
+
+
+
 
             //WASD//
             if (boardState.IsKeyDown(Keys.A)) {
@@ -174,9 +196,6 @@ namespace GrenadeWars {
             }
             if (boardState.IsKeyDown(Keys.LeftControl)) {
                 Console.WriteLine(players[1].Position);
-                Rectangle wall = new Rectangle((int)players[1].Position.X, (int)players[1].Position.Y, 10, 10);
-                wallList.Add(wall);
-
             }
         }
 
@@ -206,7 +225,7 @@ namespace GrenadeWars {
                 if (player.IsAlive) {
                     spriteBatch.Draw(grenadierTexture,
                         player.Position,
-                        null, //part of the immage
+                        null, //part of the image
                         player.Color,//color modulation
                         player.Angle,//rotation
                         new Vector2(0, grenadierTexture.Height),//positioning bottom left
@@ -214,11 +233,15 @@ namespace GrenadeWars {
                         SpriteEffects.None, //mirroring imgage
                         0); //layer of the image
                 }
-                if (wallList != null) {
-                        foreach (Rectangle rect in wallList) {
+                if (player.wallList != null) {
+                        foreach (Rectangle rect in player.wallList) {
                             spriteBatch.Draw(grenadeTexture, rect, Color.White);
+                            
                         }
                 }
+                //SpriteFont font;
+                //font = Content.Load<SpriteFont>("Segoe");
+                //spriteBatch.DrawString(font,rect.X.ToString(),new Vector2(10,200),Color.HotPink);
             }
         }
 
@@ -249,6 +272,9 @@ namespace GrenadeWars {
             players[1].Position = new Vector2(400, 100);
             players[0].playerRectange = new Rectangle(grenadierTexture.Height, grenadierTexture.Width, 100, 100);
             players[1].playerRectange = new Rectangle(grenadierTexture.Height, grenadierTexture.Width, 400, 100);
+
+            players[0].wallList.Add(new Rectangle(100, 100, 10, 10));
+            players[1].wallList.Add(new Rectangle(400, 100, 10, 10));
 
         }
     }

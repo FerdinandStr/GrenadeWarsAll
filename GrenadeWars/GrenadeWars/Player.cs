@@ -11,12 +11,16 @@ namespace GrenadeWars {
         public bool IsAlive;
         public Color Color;
         public float Angle;
+        public int DirectionX = 0; //+x=1 -x=-1 0=0
+        public int DirectionY = 1;
         public float Health;
         public float playerScaling = 1.5f;
         public float speed = 5;
-        public List<Grenade> grenadeList = new List<Grenade> { };
+
+        public Rectangle testrect = new Rectangle ( 200, 200, 10, 10);
 
         public Rectangle playerRectange;
+        public List<Rectangle> wallList = new List<Rectangle> { };
 
         public Player( bool isAlive, Color color, float angle, float health) {
             IsAlive = isAlive;
@@ -27,13 +31,6 @@ namespace GrenadeWars {
 
         internal void Uppdate(GameTime gameTime) {
             //Check Collision und Bulletshoot
-        }
-
-        public void addGrenade(Grenade grenade) {
-            grenadeList.Add(grenade);
-        }
-        public List<Grenade> getGrenadeList() {
-            return grenadeList;
         }
     }
 
